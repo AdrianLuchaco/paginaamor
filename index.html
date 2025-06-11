@@ -373,6 +373,7 @@
 
         /* Contenedor de cerezas que aparecen al hacer clic */
         .cursor-cherries {
+
             position: fixed;
             top: 0;
             left: 0;
@@ -382,9 +383,10 @@
             z-index: 1500;
         }
 
+
         .click-cherry {
             position: absolute;
-            font-size: 22px;
+ 
             animation: floatUpSmall 1.5s ease-out forwards;
         }
 
@@ -437,7 +439,6 @@
 
                 <button class="play-btn" id="playBtn" onclick="playFullAudio()">🤍 Escuchar con la voz del futuro padre de tus hijos</button>
 
-                <button class="play-btn" id="playBtn" onclick="playFullAudio()">💕 Escuchar con la voz del futuro padre de tus hijos</button>
 
                 <button class="play-btn" id="pauseBtn" onclick="pauseAudio()" style="display: none;">⏸️ Pausar</button>
                 <div class="progress-bar">
@@ -452,7 +453,7 @@
                 
 
                 <div class="hearts">🤍 🤍 🤍</div>
-                <div class="hearts">❤️ ❤️ ❤️</div>
+                
 
                 
                 <div class="signature">
@@ -465,6 +466,7 @@
 
     <div class="floating-hearts" id="floatingHearts"></div>
     <div class="cursor-cherries" id="cursorCherries"></div>
+
 
     <script>
         // Texto de la carta de ejemplo
@@ -575,8 +577,6 @@
             heart.className = 'floating-heart';
 
             heart.innerHTML = '🤍';
-
-            heart.innerHTML = '❤️';
 
             heart.style.left = Math.random() * window.innerWidth + 'px';
             heart.style.bottom = '0px';
@@ -745,7 +745,7 @@
             }
         });
 
-        // Animación de cerezas al hacer clic
+
         document.addEventListener('click', (e) => {
             const cherriesContainer = document.getElementById('cursorCherries');
             const cherry = document.createElement('div');
@@ -755,6 +755,7 @@
             cherry.style.top = e.clientY + 'px';
             cherriesContainer.appendChild(cherry);
             setTimeout(() => cherry.remove(), 1500);
+
         });
 
         // Agregar estilo de animación fadeIn
