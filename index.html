@@ -517,7 +517,9 @@
 
     <div class="floating-hearts" id="floatingHearts"></div>
     <div class="cursor-cherries" id="cursorCherries"></div>
+    <div id="ytPlayer"></div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         // Texto de la carta de ejemplo
@@ -538,6 +540,44 @@ Feliz cumpleaños, mi amor. Gracias por existir, por quererme, por hacerme senti
 Siempre tuyo, ahora y en el futuro,
 
 El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
+
+        // Música de fondo desde YouTube
+        let bgPlayer;
+        function onYouTubeIframeAPIReady() {
+            const playlist = ['cNGjD0VG4R8', '4MxPfHPRxDg'];
+            bgPlayer = new YT.Player('ytPlayer', {
+                height: '0',
+                width: '0',
+                videoId: playlist[0],
+                playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    loop: 1,
+                    playlist: playlist.join(',')
+                },
+                events: {
+                    onReady: (e) => {
+                        e.target.setVolume(10); // sonido bajito
+                        e.target.playVideo();
+                    }
+                }
+            });
+        }
+        function pauseBackgroundMusic() {
+            if (bgPlayer) bgPlayer.pauseVideo();
+        }
+        function resumeBackgroundMusic() {
+            if (bgPlayer && bgPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+                bgPlayer.playVideo();
+            }
+        }
+
+        // Audio de la carta
+        const voiceAudio = new Audio('voice.mp3');
+        voiceAudio.addEventListener('ended', () => {
+            stopAudio();
+            resumeBackgroundMusic();
+        });
 
         // Variables para la reproducción
         let wordTimestamps = [];
@@ -703,10 +743,10 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
                 pauseAudio();
                 return;
             }
-            
-            // Mostrar notificación mejorada
-            showNotification('🤍 Aquí se reproduciría tu audio completo leyendo la carta.\n\nCuando tengas el audio real, reemplaza esta función con la reproducción del archivo.');
-            
+
+            pauseBackgroundMusic();
+            voiceAudio.currentTime = 0;
+            voiceAudio.play().catch(() => {});
             simulateAudioPlayback();
         }
 
@@ -788,7 +828,10 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
                 clearInterval(currentAudio);
                 currentAudio = null;
             }
-            
+
+            voiceAudio.pause();
+            resumeBackgroundMusic();
+
             const wordElements = document.querySelectorAll('.word');
             wordElements.forEach(word => word.classList.remove('playing'));
             
@@ -802,7 +845,11 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
                 clearInterval(currentAudio);
                 currentAudio = null;
             }
-            
+
+            voiceAudio.pause();
+            voiceAudio.currentTime = 0;
+            resumeBackgroundMusic();
+
             const wordElements = document.querySelectorAll('.word');
             wordElements.forEach(word => word.classList.remove('playing'));
             
