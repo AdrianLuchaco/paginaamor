@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Amor ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #dc143c, #ff69b4, #1e90ff, #dc143c);
+            background-size: 400% 400%;
+            animation: gradientMove 8s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 20px auto;
+        }
+
+        .login-section {
+            padding: 60px 40px;
+            text-align: center;
+            background: linear-gradient(45deg, #dc143c, #ff1744, #c62828);
+            color: white;
+        }
+
+        .login-section h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-row input, .input-row input[type="date"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            font-size: 1em;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .input-row input[type="date"] {
+            color: #333;
+            padding: 10px;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.5) sepia(1) saturate(5) hue-rotate(320deg);
+            padding: 4px;
+            cursor: pointer;
+        }
+
+        .hint-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .hint-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .hint-text {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-style: italic;
+            display: none;
+        }
+
+        .login-btn {
+            background: linear-gradient(45deg, #1e90ff, #0080ff);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(30, 144, 255, 0.4);
+        }
+
+        .error-msg {
+            color: #ff4757;
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .letter-section {
+            display: none;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .letter-title {
+            text-align: center;
+            color: #2d3436;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .audio-controls {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .play-btn {
+            background: linear-gradient(45deg, #dc143c, #ff1744);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(220, 20, 60, 0.4);
+        }
+
+        .play-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .letter-content {
+            background: #ffffff;
+            background-image: 
+                /* Puntos vintage de papel viejo */
+                radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.15) 0.5px, transparent 0.5px),
+                radial-gradient(circle at 75% 25%, rgba(101, 67, 33, 0.12) 0.8px, transparent 0.8px),
+                radial-gradient(circle at 25% 75%, rgba(160, 82, 45, 0.1) 0.6px, transparent 0.6px),
+                radial-gradient(circle at 75% 75%, rgba(139, 69, 19, 0.08) 0.4px, transparent 0.4px),
+                /* Patrón de puntos más pequeños */
+                radial-gradient(circle at 12.5% 12.5%, rgba(139, 69, 19, 0.08) 0.3px, transparent 0.3px),
+                radial-gradient(circle at 37.5% 12.5%, rgba(101, 67, 33, 0.06) 0.2px, transparent 0.2px),
+                radial-gradient(circle at 62.5% 12.5%, rgba(160, 82, 45, 0.05) 0.3px, transparent 0.3px),
+                radial-gradient(circle at 87.5% 12.5%, rgba(139, 69, 19, 0.04) 0.2px, transparent 0.2px),
+                radial-gradient(circle at 12.5% 37.5%, rgba(101, 67, 33, 0.07) 0.4px, transparent 0.4px),
+                radial-gradient(circle at 87.5% 37.5%, rgba(160, 82, 45, 0.06) 0.3px, transparent 0.3px),
+                radial-gradient(circle at 12.5% 62.5%, rgba(139, 69, 19, 0.05) 0.2px, transparent 0.2px),
+                radial-gradient(circle at 87.5% 62.5%, rgba(101, 67, 33, 0.08) 0.5px, transparent 0.5px),
+                radial-gradient(circle at 12.5% 87.5%, rgba(160, 82, 45, 0.09) 0.4px, transparent 0.4px),
+                radial-gradient(circle at 37.5% 87.5%, rgba(139, 69, 19, 0.06) 0.3px, transparent 0.3px),
+                radial-gradient(circle at 62.5% 87.5%, rgba(101, 67, 33, 0.07) 0.2px, transparent 0.2px),
+                radial-gradient(circle at 87.5% 87.5%, rgba(160, 82, 45, 0.05) 0.4px, transparent 0.4px),
+                /* Manchas vintage sutiles */
+                radial-gradient(ellipse 150px 100px at 20% 30%, rgba(139, 69, 19, 0.03) 70%, transparent 70%),
+                radial-gradient(ellipse 200px 120px at 80% 20%, rgba(101, 67, 33, 0.02) 60%, transparent 60%),
+                radial-gradient(ellipse 180px 90px at 30% 80%, rgba(160, 82, 45, 0.025) 65%, transparent 65%),
+                radial-gradient(ellipse 160px 110px at 75% 85%, rgba(139, 69, 19, 0.02) 55%, transparent 55%);
+            background-size: 
+                20px 20px, 25px 25px, 18px 18px, 22px 22px,
+                10px 10px, 8px 8px, 12px 12px, 9px 9px,
+                15px 15px, 11px 11px, 13px 13px, 16px 16px,
+                14px 14px, 17px 17px, 19px 19px, 21px 21px,
+                300px 200px, 350px 250px, 280px 180px, 320px 220px;
+            padding: 60px 80px;
+            margin: 30px auto;
+            max-width: 95%;
+            position: relative;
+            line-height: 2.4;
+            font-size: 1.3em;
+            color: #2c1810;
+            font-family: 'Dancing Script', 'Brush Script MT', 'Lucida Handwriting', cursive;
+            box-shadow: 
+                0 0 30px rgba(139, 69, 19, 0.15),
+                inset 0 0 100px rgba(139, 69, 19, 0.05),
+                0 8px 25px rgba(0, 0, 0, 0.1),
+                inset 0 2px 4px rgba(139, 69, 19, 0.08),
+                inset 0 -2px 4px rgba(101, 67, 33, 0.03);
+            border-radius: 10px;
+            text-align: justify;
+            border: 1px solid rgba(139, 69, 19, 0.08);
+        }
+
+        .letter-content::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: 
+                linear-gradient(45deg, 
+                    #dc143c 0%, 
+                    #ff69b4 25%, 
+                    #1e90ff 50%, 
+                    #ff69b4 75%, 
+                    #dc143c 100%);
+            border-radius: 15px;
+            z-index: -1;
+            filter: blur(2px);
+            opacity: 0.7;
+        }
+
+        .letter-content::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                /* Efecto de papel antiguo con más sutileza */
+                radial-gradient(circle at 15% 25%, rgba(139, 69, 19, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 85% 35%, rgba(101, 67, 33, 0.02) 1px, transparent 1px),
+                radial-gradient(circle at 45% 75%, rgba(160, 82, 45, 0.025) 1px, transparent 1px);
+            background-size: 30px 30px, 35px 35px, 40px 40px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .word {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 2px 1px;
+            border-radius: 3px;
+        }
+
+        .word:hover {
+            background-color: rgba(220, 20, 60, 0.3);
+            color: #dc143c;
+        }
+
+        .word.playing {
+            background-color: rgba(220, 20, 60, 0.5);
+            color: #dc143c;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .hearts {
+            text-align: center;
+            font-size: 2em;
+            margin: 30px 0;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-style: italic;
+            color: #636e72;
+            font-size: 1.1em;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff69b4;
+            animation: floatUp 3s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(220, 20, 60, 0.2);
+            border-radius: 2px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc143c, #ff1744);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .login-section, .letter-section {
+                padding: 40px 20px;
+            }
+            
+            .letter-content {
+                padding: 20px;
+                font-size: 1.1em;
+            }
+
+            .letter-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sección de Login -->
+        <div class="login-section" id="loginSection">
+            <h1>💕 Acceso Especial 💕</h1>
+            <div class="login-form">
+                <div class="input-group">
+                    <label>Usuario:</label>
+                    <div class="input-row">
+                        <input type="text" id="username" placeholder="Introduce el usuario">
+                        <button class="hint-btn" onclick="toggleHint('userHint')">Pista</button>
+                    </div>
+                    <div class="hint-text" id="userHint">MI DNI</div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Contraseña:</label>
+                    <div class="input-row">
+                        <input type="date" id="password" min="2020-01-01" max="2030-12-31" value="2025-05-01">
+                        <button class="hint-btn" onclick="toggleHint('passHint')">Pista</button>
+                    </div>
+                    <div class="hint-text" id="passHint">NUESTRO ANIVERSARIO</div>
+                </div>
+                
+                <button class="login-btn" onclick="attemptLogin()">💖 Entrar 💖</button>
+                <div class="error-msg" id="errorMsg">¡Datos incorrectos! Inténtalo de nuevo 💕</div>
+            </div>
+        </div>
+
+        <!-- Sección de la Carta -->
+        <div class="letter-section" id="letterSection">
+            <h1 class="letter-title">💌 Para Ti, Mi Amor 💌</h1>
+            
+            <div class="audio-controls">
+                <button class="play-btn" id="playBtn" onclick="playFullAudio()">💕 Escuchar la voz de tu futuro esposo</button>
+                <button class="play-btn" id="pauseBtn" onclick="pauseAudio()" style="display: none;">⏸️ Pausar</button>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            
+            <div class="letter-content">
+                <p id="letterText">
+                    <!-- El texto se generará dinámicamente con JavaScript -->
+                </p>
+                
+                <div class="hearts">💕 💖 💕</div>
+                
+                <div class="signature">
+                    Con todo mi amor,<br>
+                    Adrián, para ti, mi vida, mi amor jijiijiji ❤️
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <script>
+        // Texto de la carta de ejemplo
+        const letterText = `Mi querida amor, hoy es tu cumpleaños y no puedo estar más feliz de celebrar contigo un año más de vida. Desde el día que entraste en mi vida, todo cambió para mejor. Tu sonrisa ilumina mis días más oscuros y tu amor me da la fuerza para enfrentar cualquier desafío. 
+
+        Recuerdo perfectamente nuestro primer encuentro, cómo mi corazón se aceleró cuando te vi por primera vez. Desde ese momento supe que eras especial, que eras la persona con la que quería compartir mi vida. Cada día que pasa contigo es un regalo que atesoro en mi corazón.
+
+        Quiero que sepas que te amo más de lo que las palabras pueden expresar. Amo tu risa contagiosa, amo cómo cuidas de mí cuando estoy enfermo, amo tu pasión por la vida y amo la forma en que me haces sentir el hombre más afortunado del mundo.
+
+        Mirando hacia el futuro, sueño con todas las aventuras que viviremos juntos. Quiero viajar contigo por el mundo, quiero construir una familia contigo, quiero envejecer a tu lado y seguir enamorándome de ti cada día. Quiero ser tu compañero en todos los momentos, tanto en los alegres como en los difíciles.
+
+        En este día tan especial, quiero prometerte que siempre estaré aquí para ti, que te amaré incondicionalmente y que haré todo lo posible para hacerte feliz. Eres mi presente más preciado y mi futuro más deseado.
+
+        Feliz cumpleaños, mi amor. Que este nuevo año de vida esté lleno de alegría, salud y todo lo que tu corazón desee.`;
+
+        // Variables para la reproducción
+        let wordTimestamps = [];
+        let words = [];
+        let currentAudio = null;
+        let isPlaying = false;
+        let currentWordIndex = 0;
+        let totalWords = 0;
+
+        function initializeLetter() {
+            const letterContainer = document.getElementById('letterText');
+            const wordsArray = letterText.split(' ');
+            totalWords = wordsArray.length;
+            let htmlContent = '';
+            
+            // Generar timestamps simulados
+            wordsArray.forEach((word, index) => {
+                const startTime = index * 0.5;
+                const endTime = (index + 1) * 0.5;
+                wordTimestamps.push({ word: word, start: startTime, end: endTime });
+                words.push(word);
+                
+                htmlContent += `<span class="word" data-time="${startTime}" onclick="playFromWord(${index})">${word}</span> `;
+            });
+            
+            letterContainer.innerHTML = htmlContent;
+            createFloatingHearts();
+        }
+
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            
+            setInterval(() => {
+                if (isPlaying) {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = ['💕', '💖', '💝', '💗', '💓'][Math.floor(Math.random() * 5)];
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.bottom = '0px';
+                    
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }
+            }, 1000);
+        }
+
+        function updateProgressBar() {
+            const progressFill = document.getElementById('progressFill');
+            const progress = (currentWordIndex / totalWords) * 100;
+            progressFill.style.width = progress + '%';
+        }
+
+        function toggleHint(hintId) {
+            const hint = document.getElementById(hintId);
+            hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function attemptLogin() {
+            const username = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password');
+            const errorMsg = document.getElementById('errorMsg');
+
+            // Verificar credenciales
+            if (username === '49460586Y' && passwordInput.value === '2025-05-05') {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('letterSection').style.display = 'block';
+                initializeLetter();
+                
+                // Efecto de corazones al entrar
+                setTimeout(() => {
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(() => {
+                            createSingleHeart();
+                        }, i * 200);
+                    }
+                }, 500);
+            } else {
+                errorMsg.style.display = 'block';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function createSingleHeart() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.bottom = '0px';
+            
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+
+        function playFullAudio() {
+            if (isPlaying) {
+                pauseAudio();
+                return;
+            }
+            
+            // Mostrar notificación mejorada
+            showNotification('💕 Aquí se reproduciría tu audio completo leyendo la carta.\n\nCuando tengas el audio real, reemplaza esta función con la reproducción del archivo.');
+            
+            simulateAudioPlayback();
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(45deg, #dc143c, #ff1744);
+                color: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 10000;
+                text-align: center;
+                font-size: 1.1em;
+                max-width: 400px;
+                animation: fadeIn 0.3s ease;
+            `;
+            notification.innerHTML = `
+                <div style="margin-bottom: 20px;">${message}</div>
+                <button onclick="this.parentElement.remove()" style="
+                    background: rgba(255,255,255,0.2);
+                    border: 2px solid white;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 25px;
+                    cursor: pointer;
+                    font-size: 1em;
+                ">💖 Entendido</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        function simulateAudioPlayback() {
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            
+            playBtn.style.display = 'none';
+            pauseBtn.style.display = 'inline-block';
+            isPlaying = true;
+            currentWordIndex = 0;
+
+            const wordElements = document.querySelectorAll('.word');
+            
+            const interval = setInterval(() => {
+                // Limpiar palabra anterior
+                if (currentWordIndex > 0) {
+                    wordElements[currentWordIndex - 1].classList.remove('playing');
+                }
+                
+                // Resaltar palabra actual
+                if (currentWordIndex < wordElements.length) {
+                    wordElements[currentWordIndex].classList.add('playing');
+                    updateProgressBar();
+                    currentWordIndex++;
+                } else {
+                    // Fin de la reproducción
+                    clearInterval(interval);
+                    wordElements[wordElements.length - 1].classList.remove('playing');
+                    stopAudio();
+                }
+            }, 500);
+            
+            currentAudio = interval;
+        }
+
+        function pauseAudio() {
+            if (currentAudio) {
+                clearInterval(currentAudio);
+                currentAudio = null;
+            }
+            
+            const wordElements = document.querySelectorAll('.word');
+            wordElements.forEach(word => word.classList.remove('playing'));
+            
+            document.getElementById('playBtn').style.display = 'inline-block';
+            document.getElementById('pauseBtn').style.display = 'none';
+            isPlaying = false;
+        }
+
+        function stopAudio() {
+            if (currentAudio) {
+                clearInterval(currentAudio);
+                currentAudio = null;
+            }
+            
+            const wordElements = document.querySelectorAll('.word');
+            wordElements.forEach(word => word.classList.remove('playing'));
+            
+            document.getElementById('playBtn').style.display = 'inline-block';
+            document.getElementById('pauseBtn').style.display = 'none';
+            document.getElementById('progressFill').style.width = '0%';
+            isPlaying = false;
+            currentWordIndex = 0;
+        }
+
+        function playFromWord(wordIndex) {
+            stopAudio();
+            
+            const timestamp = wordTimestamps[wordIndex].start;
+            showNotification(`🎵 Aquí saltaría al segundo ${timestamp.toFixed(1)} de tu audio, donde dices "${words[wordIndex]}"\n\nCuando tengas el audio real, esto funcionará automáticamente.`);
+            
+            simulatePlaybackFromWord(wordIndex);
+        }
+
+        function simulatePlaybackFromWord(startIndex) {
+            const wordElements = document.querySelectorAll('.word');
+            currentWordIndex = startIndex;
+            
+            const interval = setInterval(() => {
+                if (currentWordIndex > startIndex) {
+                    wordElements[currentWordIndex - 1].classList.remove('playing');
+                }
+                
+                if (currentWordIndex < wordElements.length) {
+                    wordElements[currentWordIndex].classList.add('playing');
+                    updateProgressBar();
+                    currentWordIndex++;
+                } else {
+                    clearInterval(interval);
+                    wordElements[wordElements.length - 1].classList.remove('playing');
+                    stopAudio();
+                }
+            }, 500);
+            
+            currentAudio = interval;
+            document.getElementById('playBtn').style.display = 'none';
+            document.getElementById('pauseBtn').style.display = 'inline-block';
+            isPlaying = true;
+        }
+
+        // Permitir login con Enter
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginSection').style.display !== 'none') {
+                attemptLogin();
+            }
+        });
+
+        // Agregar estilo de animación fadeIn
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translate(-50%, -60%); }
+                to { opacity: 1; transform: translate(-50%, -50%); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
