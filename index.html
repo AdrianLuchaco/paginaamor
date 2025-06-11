@@ -371,18 +371,7 @@
             }
         }
 
-
-        /* Efecto de cursor con cereza */
-        .cursor-cherry {
-            position: fixed;
-            top: 0;
-            left: 0;
-            font-size: 26px;
-
-
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            transition: transform 0.08s ease-out;
+        /* Contenedor de cerezas que aparecen al hacer clic */
             z-index: 2000;
         }
 
@@ -452,7 +441,6 @@
         <div class="letter-section" id="letterSection">
             <h1 class="letter-title">💌 Para Ti, Mi Amor 💌</h1>
             
-            <div class="audio-controls">
 
                 <button class="play-btn" id="playBtn" onclick="playFullAudio()">🤍 Escuchar con la voz del futuro padre de tus hijos</button>
 
@@ -732,13 +720,7 @@
             simulatePlaybackFromWord(wordIndex);
         }
 
-        function simulatePlaybackFromWord(startIndex) {
-            const wordElements = document.querySelectorAll('.word');
-            currentWordIndex = startIndex;
-            
-            const interval = setInterval(() => {
-                if (currentWordIndex > startIndex) {
-                    wordElements[currentWordIndex - 1].classList.remove('playing');
+        // Animación de cerezas al hacer clic
                 }
                 
                 if (currentWordIndex < wordElements.length) {
