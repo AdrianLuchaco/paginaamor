@@ -371,22 +371,7 @@
             }
         }
 
-
-        /* Efecto de cursor con cereza */
-        .cursor-cherry {
-            position: fixed;
-            top: 0;
-            left: 0;
-            font-size: 26px;
-
-
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            transition: transform 0.08s ease-out;
-            z-index: 2000;
-        }
-
-
+        /* Contenedor de cerezas que aparecen al hacer clic */
         .cursor-cherries {
 
             position: fixed;
@@ -401,9 +386,7 @@
 
         .click-cherry {
             position: absolute;
-            font-size: 22px;
-
-
+ 
             animation: floatUpSmall 1.5s ease-out forwards;
         }
 
@@ -483,7 +466,7 @@
 
     <div class="floating-hearts" id="floatingHearts"></div>
     <div class="cursor-cherries" id="cursorCherries"></div>
-    <div class="cursor-cherry" id="cursorCherry">🍒</div>
+
 
     <script>
         // Texto de la carta de ejemplo
@@ -762,13 +745,6 @@
             }
         });
 
-        // Animación de cursor y corazones al hacer clic
-
-        const cursorCherryEl = document.getElementById('cursorCherry');
-        document.addEventListener('mousemove', (e) => {
-            cursorCherryEl.style.left = e.clientX + 'px';
-            cursorCherryEl.style.top = e.clientY + 'px';
-        });
 
         document.addEventListener('click', (e) => {
             const cherriesContainer = document.getElementById('cursorCherries');
