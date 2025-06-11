@@ -247,6 +247,10 @@
             border: 1px solid rgba(139, 69, 19, 0.08);
         }
 
+        .letter-text p {
+            margin: 0 0 1em 0;
+        }
+
         .letter-content::before {
             content: '';
             position: absolute;
@@ -494,9 +498,9 @@
             </div>
             
             <div class="letter-content">
-                <p id="letterText">
+                <div id="letterText" class="letter-text">
                     <!-- El texto se generará dinámicamente con JavaScript -->
-                </p>
+                </div>
                 
 
                 <div class="hearts">🤍 🤍 🤍</div>
@@ -550,8 +554,10 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
             let htmlContent = '';
             let wordIndex = 0;
 
-            paragraphs.forEach((paragraph, pIdx) => {
-                const wordsArray = paragraph.trim().split(' ');
+            paragraphs.forEach(paragraph => {
+                const wordsArray = paragraph.trim().split(' ').filter(w => w);
+                htmlContent += '<p>';
+
                 wordsArray.forEach(word => {
                     const startTime = wordIndex * 0.5;
                     const endTime = (wordIndex + 1) * 0.5;
@@ -561,9 +567,8 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
                     htmlContent += `<span class="word" data-time="${startTime}" onclick="playFromWord(${wordIndex})">${word}</span> `;
                     wordIndex++;
                 });
-                if (pIdx < paragraphs.length - 1) {
-                    htmlContent += '<br><br>';
-                }
+                htmlContent += '</p>';
+
             });
 
             totalWords = words.length;
