@@ -406,7 +406,11 @@
             <h1 class="letter-title">💌 Para Ti, Mi Amor 💌</h1>
             
             <div class="audio-controls">
+
                 <button class="play-btn" id="playBtn" onclick="playFullAudio()">🤍 Escuchar con la voz del futuro padre de tus hijos</button>
+
+                <button class="play-btn" id="playBtn" onclick="playFullAudio()">💕 Escuchar con la voz del futuro padre de tus hijos</button>
+
                 <button class="play-btn" id="pauseBtn" onclick="pauseAudio()" style="display: none;">⏸️ Pausar</button>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
@@ -418,7 +422,10 @@
                     <!-- El texto se generará dinámicamente con JavaScript -->
                 </p>
                 
+
                 <div class="hearts">🤍 🤍 🤍</div>
+                <div class="hearts">❤️ ❤️ ❤️</div>
+
                 
                 <div class="signature">
                     Con todo mi amor,<br>
@@ -480,6 +487,9 @@
                     const heart = document.createElement('div');
                     heart.className = 'floating-heart';
                     heart.innerHTML = ['🤍','❤️','♥️','❣️'][Math.floor(Math.random() * 4)];
+
+                    heart.innerHTML = ['❤️', '♥️', '❣️'][Math.floor(Math.random() * 3)];
+
                     heart.style.left = Math.random() * window.innerWidth + 'px';
                     heart.style.bottom = '0px';
                     
@@ -534,7 +544,11 @@
             const heartsContainer = document.getElementById('floatingHearts');
             const heart = document.createElement('div');
             heart.className = 'floating-heart';
+
             heart.innerHTML = '🤍';
+
+            heart.innerHTML = '❤️';
+
             heart.style.left = Math.random() * window.innerWidth + 'px';
             heart.style.bottom = '0px';
             
