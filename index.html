@@ -164,12 +164,12 @@
         }
 
         .play-btn {
-            background: linear-gradient(45deg, #dc143c, #ff1744);
+            background: linear-gradient(45deg, #b22222, #dc143c);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 10px 20px;
             border-radius: 25px;
-            font-size: 1.1em;
+            font-size: 0.95em;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 0 10px;
@@ -224,7 +224,8 @@
             line-height: 2.4;
             font-size: 1.3em;
             color: #2c1810;
-            font-family: 'Dancing Script', 'Brush Script MT', 'Lucida Handwriting', cursive;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-weight: normal;
             box-shadow: 
                 0 0 30px rgba(139, 69, 19, 0.15),
                 inset 0 0 100px rgba(139, 69, 19, 0.05),
@@ -243,12 +244,9 @@
             left: -10px;
             right: -10px;
             bottom: -10px;
-            background: 
-                linear-gradient(45deg, 
-                    #dc143c 0%, 
-                    #ff69b4 25%, 
-                    #1e90ff 50%, 
-                    #ff69b4 75%, 
+            background:
+                linear-gradient(45deg,
+                    #dc143c 0%,
                     #dc143c 100%);
             border-radius: 15px;
             z-index: -1;
@@ -288,7 +286,7 @@
         .word.playing {
             background-color: rgba(220, 20, 60, 0.5);
             color: #dc143c;
-            font-weight: bold;
+            font-weight: normal;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
@@ -322,7 +320,7 @@
         .floating-heart {
             position: absolute;
             font-size: 20px;
-            color: #ff69b4;
+            color: #dc143c;
             animation: floatUp 3s ease-out forwards;
         }
 
@@ -408,7 +406,7 @@
             <h1 class="letter-title">💌 Para Ti, Mi Amor 💌</h1>
             
             <div class="audio-controls">
-                <button class="play-btn" id="playBtn" onclick="playFullAudio()">💕 Escuchar la voz de tu futuro esposo</button>
+                <button class="play-btn" id="playBtn" onclick="playFullAudio()">💕 Escuchar con la voz del futuro padre de tus hijos</button>
                 <button class="play-btn" id="pauseBtn" onclick="pauseAudio()" style="display: none;">⏸️ Pausar</button>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
@@ -420,7 +418,7 @@
                     <!-- El texto se generará dinámicamente con JavaScript -->
                 </p>
                 
-                <div class="hearts">💕 💖 💕</div>
+                <div class="hearts">❤️ ❤️ ❤️</div>
                 
                 <div class="signature">
                     Con todo mi amor,<br>
@@ -481,7 +479,7 @@
                 if (isPlaying) {
                     const heart = document.createElement('div');
                     heart.className = 'floating-heart';
-                    heart.innerHTML = ['💕', '💖', '💝', '💗', '💓'][Math.floor(Math.random() * 5)];
+                    heart.innerHTML = ['❤️', '♥️', '❣️'][Math.floor(Math.random() * 3)];
                     heart.style.left = Math.random() * window.innerWidth + 'px';
                     heart.style.bottom = '0px';
                     
@@ -491,7 +489,7 @@
                         heart.remove();
                     }, 3000);
                 }
-            }, 1000);
+            }, 700);
         }
 
         function updateProgressBar() {
@@ -536,7 +534,7 @@
             const heartsContainer = document.getElementById('floatingHearts');
             const heart = document.createElement('div');
             heart.className = 'floating-heart';
-            heart.innerHTML = '💖';
+            heart.innerHTML = '❤️';
             heart.style.left = Math.random() * window.innerWidth + 'px';
             heart.style.bottom = '0px';
             
