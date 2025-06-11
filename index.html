@@ -371,22 +371,19 @@
             }
         }
 
-        /* Efecto de cursor personalizado */
-        .cursor-circle {
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(220, 20, 60, 0.7);
-            border-radius: 50%;
+        /* Efecto de cursor con cereza */
+        .cursor-cherry {
             position: fixed;
             top: 0;
             left: 0;
+            font-size: 26px;
             transform: translate(-50%, -50%);
             pointer-events: none;
             transition: transform 0.08s ease-out;
             z-index: 2000;
         }
 
-        .cursor-hearts {
+        .cursor-cherries {
             position: fixed;
             top: 0;
             left: 0;
@@ -396,10 +393,9 @@
             z-index: 1500;
         }
 
-        .click-heart {
+        .click-cherry {
             position: absolute;
-            font-size: 18px;
-            color: #dc143c;
+            font-size: 22px;
             animation: floatUpSmall 1.5s ease-out forwards;
         }
 
@@ -479,8 +475,8 @@
     </div>
 
     <div class="floating-hearts" id="floatingHearts"></div>
-    <div class="cursor-hearts" id="cursorHearts"></div>
-    <div class="cursor-circle" id="cursorCircle"></div>
+    <div class="cursor-cherries" id="cursorCherries"></div>
+    <div class="cursor-cherry" id="cursorCherry">🍒</div>
 
     <script>
         // Texto de la carta de ejemplo
@@ -762,21 +758,21 @@
         });
 
         // Animación de cursor y corazones al hacer clic
-        const cursorCircleEl = document.getElementById('cursorCircle');
+        const cursorCherryEl = document.getElementById('cursorCherry');
         document.addEventListener('mousemove', (e) => {
-            cursorCircleEl.style.left = e.clientX + 'px';
-            cursorCircleEl.style.top = e.clientY + 'px';
+            cursorCherryEl.style.left = e.clientX + 'px';
+            cursorCherryEl.style.top = e.clientY + 'px';
         });
 
         document.addEventListener('click', (e) => {
-            const hearts = document.getElementById('cursorHearts');
-            const heart = document.createElement('div');
-            heart.className = 'click-heart';
-            heart.innerHTML = ['🤍','❤️','❣️'][Math.floor(Math.random()*3)];
-            heart.style.left = e.clientX + 'px';
-            heart.style.top = e.clientY + 'px';
-            hearts.appendChild(heart);
-            setTimeout(() => heart.remove(), 1500);
+            const cherriesContainer = document.getElementById('cursorCherries');
+            const cherry = document.createElement('div');
+            cherry.className = 'click-cherry';
+            cherry.textContent = '🍒';
+            cherry.style.left = e.clientX + 'px';
+            cherry.style.top = e.clientY + 'px';
+            cherriesContainer.appendChild(cherry);
+            setTimeout(() => cherry.remove(), 1500);
         });
 
         // Agregar estilo de animación fadeIn
