@@ -323,6 +323,10 @@
 
         .floating-hearts {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 1000;
         }
@@ -332,6 +336,39 @@
             font-size: 20px;
             color: #dc143c;
             animation: floatUp 3s ease-out forwards;
+        }
+
+        @keyframes floatDown {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100px) rotate(360deg);
+            }
+        }
+
+        @keyframes floatLeft {
+            0% {
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100px) rotate(360deg);
+            }
+        }
+
+        @keyframes floatRight {
+            0% {
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100px) rotate(360deg);
+            }
         }
 
         @keyframes floatUp {
@@ -522,20 +559,41 @@
 
         function createFloatingHearts() {
             const heartsContainer = document.getElementById('floatingHearts');
-            
+
             setInterval(() => {
                 if (isPlaying) {
                     const heart = document.createElement('div');
                     heart.className = 'floating-heart';
-                    heart.innerHTML = ['🤍','❤️','♥️','❣️'][Math.floor(Math.random() * 4)];
+                    heart.innerHTML = ['🤍', '❤️', '♥️', '❣️'][Math.floor(Math.random() * 4)];
 
-                    heart.innerHTML = ['❤️', '♥️', '❣️'][Math.floor(Math.random() * 3)];
+                    const directions = ['up', 'down', 'left', 'right'];
+                    const dir = directions[Math.floor(Math.random() * directions.length)];
 
-                    heart.style.left = Math.random() * window.innerWidth + 'px';
-                    heart.style.bottom = '0px';
-                    
+                    switch (dir) {
+                        case 'up':
+                            heart.style.left = Math.random() * window.innerWidth + 'px';
+                            heart.style.bottom = '0px';
+                            heart.style.animationName = 'floatUp';
+                            break;
+                        case 'down':
+                            heart.style.left = Math.random() * window.innerWidth + 'px';
+                            heart.style.top = '0px';
+                            heart.style.animationName = 'floatDown';
+                            break;
+                        case 'left':
+                            heart.style.top = Math.random() * window.innerHeight + 'px';
+                            heart.style.right = '0px';
+                            heart.style.animationName = 'floatLeft';
+                            break;
+                        case 'right':
+                            heart.style.top = Math.random() * window.innerHeight + 'px';
+                            heart.style.left = '0px';
+                            heart.style.animationName = 'floatRight';
+                            break;
+                    }
+
                     heartsContainer.appendChild(heart);
-                    
+
                     setTimeout(() => {
                         heart.remove();
                     }, 3000);
@@ -588,11 +646,34 @@
 
             heart.innerHTML = '🤍';
 
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.bottom = '0px';
-            
+            const directions = ['up', 'down', 'left', 'right'];
+            const dir = directions[Math.floor(Math.random() * directions.length)];
+
+            switch (dir) {
+                case 'up':
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.bottom = '0px';
+                    heart.style.animationName = 'floatUp';
+                    break;
+                case 'down':
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = '0px';
+                    heart.style.animationName = 'floatDown';
+                    break;
+                case 'left':
+                    heart.style.top = Math.random() * window.innerHeight + 'px';
+                    heart.style.right = '0px';
+                    heart.style.animationName = 'floatLeft';
+                    break;
+                case 'right':
+                    heart.style.top = Math.random() * window.innerHeight + 'px';
+                    heart.style.left = '0px';
+                    heart.style.animationName = 'floatRight';
+                    break;
+            }
+
             heartsContainer.appendChild(heart);
-            
+
             setTimeout(() => {
                 heart.remove();
             }, 3000);
