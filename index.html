@@ -370,6 +370,45 @@
                 font-size: 2em;
             }
         }
+
+        /* Efecto de cursor con cereza */
+        .cursor-cherry {
+            position: fixed;
+            top: 0;
+            left: 0;
+            font-size: 26px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: transform 0.08s ease-out;
+            z-index: 2000;
+        }
+
+        .cursor-cherries {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1500;
+        }
+
+        .click-cherry {
+            position: absolute;
+            font-size: 22px;
+            animation: floatUpSmall 1.5s ease-out forwards;
+        }
+
+        @keyframes floatUpSmall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-60px) rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -436,6 +475,8 @@
     </div>
 
     <div class="floating-hearts" id="floatingHearts"></div>
+    <div class="cursor-cherries" id="cursorCherries"></div>
+    <div class="cursor-cherry" id="cursorCherry">🍒</div>
 
     <script>
         // Texto de la carta de ejemplo
@@ -714,6 +755,24 @@
             if (e.key === 'Enter' && document.getElementById('loginSection').style.display !== 'none') {
                 attemptLogin();
             }
+        });
+
+        // Animación de cursor y corazones al hacer clic
+        const cursorCherryEl = document.getElementById('cursorCherry');
+        document.addEventListener('mousemove', (e) => {
+            cursorCherryEl.style.left = e.clientX + 'px';
+            cursorCherryEl.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('click', (e) => {
+            const cherriesContainer = document.getElementById('cursorCherries');
+            const cherry = document.createElement('div');
+            cherry.className = 'click-cherry';
+            cherry.textContent = '🍒';
+            cherry.style.left = e.clientX + 'px';
+            cherry.style.top = e.clientY + 'px';
+            cherriesContainer.appendChild(cherry);
+            setTimeout(() => cherry.remove(), 1500);
         });
 
         // Agregar estilo de animación fadeIn
