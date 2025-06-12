@@ -508,7 +508,9 @@
 
 
                 <button class="play-btn" id="pauseBtn" onclick="pauseAudio()" style="display: none;">⏸️ Pausar</button>
+                <button class="play-btn small-btn" id="bgPrevBtn" onclick="previousTrack()">⏮️</button>
                 <button class="play-btn small-btn" id="bgToggleBtn" onclick="toggleBackgroundMusic()">⏸️</button>
+                <button class="play-btn small-btn" id="bgNextBtn" onclick="nextTrack()">⏭️</button>
                 <span class="slider-label">🎵 Música</span>
                 <input type="range" id="bgVolume" class="volume-slider" min="0" max="1" step="0.01" value="0.15" onchange="setBgVolume(this.value)">
                 <span class="slider-label">🗣️ Voz</span>
@@ -590,9 +592,7 @@ El futuro padre de tus hijos.`;
 
 
         bgAudio.addEventListener('ended', () => {
-            currentTrack = (currentTrack + 1) % playlist.length;
-            bgAudio.src = playlist[currentTrack];
-            bgAudio.play().catch(() => {});
+            nextTrack();
         });
 
         function playBackgroundMusic() {
@@ -630,6 +630,24 @@ El futuro padre de tus hijos.`;
                 bgAudio.pause();
                 btn.textContent = '▶️';
                 bgMusicPaused = true;
+            }
+        }
+
+        function nextTrack() {
+            const wasPaused = bgAudio.paused;
+            currentTrack = (currentTrack + 1) % playlist.length;
+            bgAudio.src = playlist[currentTrack];
+            if (!wasPaused) {
+                bgAudio.play().catch(() => {});
+            }
+        }
+
+        function previousTrack() {
+            const wasPaused = bgAudio.paused;
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            bgAudio.src = playlist[currentTrack];
+            if (!wasPaused) {
+                bgAudio.play().catch(() => {});
             }
         }
 
