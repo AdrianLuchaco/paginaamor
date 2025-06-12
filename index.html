@@ -681,6 +681,9 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('letterSection').style.display = 'block';
                 initializeLetter();
+                if (bgPlayer && bgPlayer.playVideo) {
+                    bgPlayer.playVideo();
+                }
                 
                 // Efecto de corazones al entrar
                 setTimeout(() => {
