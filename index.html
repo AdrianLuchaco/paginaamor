@@ -517,7 +517,7 @@
 
     <div class="floating-hearts" id="floatingHearts"></div>
     <div class="cursor-cherries" id="cursorCherries"></div>
-    <audio id="bgAudio" src="perfect.mp3" preload="auto" loop></audio>
+    <audio id="bgAudio" preload="auto"></audio>
 
     <script>
         // Texto de la carta de ejemplo
@@ -539,10 +539,22 @@ Siempre tuyo, ahora y en el futuro,
 
 El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
 
-        // Música de fondo local
+         // Música de fondo local con lista de reproducción
+        const bgAudio = document.getElementById('bgAudio');
         const bgAudio = document.getElementById('bgAudio');
         bgAudio.loop = true;
+        const playlist = ['perfect.mp3', 'inthestars.mp3', 'melendi.mp3', 'laplena.mp3'];
+        let currentTrack = 0;
+        bgAudio.src = playlist[currentTrack];
         bgAudio.volume = 0.15;
+        bgAudio.volume = 0.15;
+
+
+        bgAudio.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            bgAudio.src = playlist[currentTrack];
+            bgAudio.play().catch(() => {});
+        });
 
         function playBackgroundMusic() {
             bgAudio.play().catch(() => {});
