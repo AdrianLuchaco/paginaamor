@@ -517,7 +517,7 @@
 
     <div class="floating-hearts" id="floatingHearts"></div>
     <div class="cursor-cherries" id="cursorCherries"></div>
-    <audio id="bgAudio" src="bgMusic.mp3" preload="auto" loop></audio>
+    <audio id="bgAudio" src="perfect.mp3" preload="auto" loop></audio>
 
     <script>
         // Texto de la carta de ejemplo
@@ -540,7 +540,7 @@ Siempre tuyo, ahora y en el futuro,
 El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
 
         // Música de fondo local
-        const bgAudio = new Audio('perfect.mp3');
+        const bgAudio = document.getElementById('bgAudio');
         bgAudio.loop = true;
         bgAudio.volume = 0.5;
 
