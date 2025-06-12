@@ -196,6 +196,11 @@
             margin: 0 5px;
         }
 
+        .slider-label {
+            font-size: 0.9em;
+            margin: 0 5px;
+        }
+
         .play-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 15px rgba(220, 20, 60, 0.4);
@@ -504,7 +509,9 @@
 
                 <button class="play-btn" id="pauseBtn" onclick="pauseAudio()" style="display: none;">⏸️ Pausar</button>
                 <button class="play-btn small-btn" id="bgToggleBtn" onclick="toggleBackgroundMusic()">⏸️</button>
+                <span class="slider-label">🎵 Música</span>
                 <input type="range" id="bgVolume" class="volume-slider" min="0" max="1" step="0.01" value="0.15" onchange="setBgVolume(this.value)">
+                <span class="slider-label">🗣️ Voz</span>
                 <input type="range" id="voiceVolume" class="volume-slider" min="0" max="1" step="0.01" value="1" onchange="setVoiceVolume(this.value)">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
@@ -595,12 +602,18 @@ El futuro padre de tus hijos.`;
         function pauseBackgroundMusic() {
             if (!bgMusicPaused) {
                 bgAudio.volume = 0.015; // keep music playing softly
+                const slider = document.getElementById('bgVolume');
+                slider.value = 0.015;
+                slider.disabled = true;
             }
         }
 
         function resumeBackgroundMusic() {
             if (!bgMusicPaused) {
                 bgAudio.volume = bgMusicVolume;
+                const slider = document.getElementById('bgVolume');
+                slider.disabled = false;
+                slider.value = bgMusicVolume;
                 if (bgAudio.paused) {
                     bgAudio.play().catch(() => {});
                 }
