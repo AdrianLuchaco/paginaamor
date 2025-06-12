@@ -354,7 +354,7 @@
         .floating-heart {
             position: absolute;
             font-size: 20px;
-            color: #dc143c;
+            color: #ffffff;
             animation: floatUp 3s ease-out forwards;
         }
 
@@ -695,7 +695,7 @@ El futuro padre de tus hijos.`;
                 if (isPlaying) {
                     const heart = document.createElement('div');
                     heart.className = 'floating-heart';
-                    heart.innerHTML = ['🤍', '❤️', '♥️', '❣️'][Math.floor(Math.random() * 4)];
+                    heart.innerHTML = ['🤍', '🤍', '🤍', '🫶'][Math.floor(Math.random() * 4)];
 
                     const directions = ['up', 'down', 'left', 'right'];
                     const dir = directions[Math.floor(Math.random() * directions.length)];
