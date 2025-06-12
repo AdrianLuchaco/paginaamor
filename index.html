@@ -517,9 +517,7 @@
 
     <div class="floating-hearts" id="floatingHearts"></div>
     <div class="cursor-cherries" id="cursorCherries"></div>
-    <div id="ytPlayer"></div>
-
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <audio id="bgAudio" src="bgMusic.mp3" preload="auto" loop></audio>
 
     <script>
         // Texto de la carta de ejemplo
@@ -541,34 +539,20 @@ Siempre tuyo, ahora y en el futuro,
 
 El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
 
-        // Música de fondo desde YouTube
-        let bgPlayer;
-        function onYouTubeIframeAPIReady() {
-            const playlist = ['cNGjD0VG4R8', '4MxPfHPRxDg'];
-            bgPlayer = new YT.Player('ytPlayer', {
-                height: '0',
-                width: '0',
-                videoId: playlist[0],
-                playerVars: {
-                    autoplay: 1,
-                    controls: 0,
-                    loop: 1,
-                    playlist: playlist.join(',')
-                },
-                events: {
-                    onReady: (e) => {
-                        e.target.setVolume(50); // sonido bajito
-                        e.target.playVideo();
-                    }
-                }
-            });
+        // Música de fondo local
+        const bgAudio = new Audio('bgMusic.mp3');
+        bgAudio.loop = true;
+        bgAudio.volume = 0.5;
+
+        function playBackgroundMusic() {
+            bgAudio.play().catch(() => {});
         }
         function pauseBackgroundMusic() {
-            if (bgPlayer) bgPlayer.pauseVideo();
+            bgAudio.pause();
         }
         function resumeBackgroundMusic() {
-            if (bgPlayer && bgPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
-                bgPlayer.playVideo();
+            if (bgAudio.paused) {
+                bgAudio.play().catch(() => {});
             }
         }
 
@@ -681,9 +665,7 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('letterSection').style.display = 'block';
                 initializeLetter();
-                if (bgPlayer && bgPlayer.playVideo) {
-                    bgPlayer.playVideo();
-                }
+                playBackgroundMusic();
                 
                 // Efecto de corazones al entrar
                 setTimeout(() => {
