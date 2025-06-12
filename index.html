@@ -575,9 +575,10 @@ El futuro padre de tus hijos.`;
             bgAudio.play().catch(() => {});
         }
         function pauseBackgroundMusic() {
-            bgAudio.pause();
+            bgAudio.volume = 0.03; // keep music playing softly
         }
         function resumeBackgroundMusic() {
+            bgAudio.volume = 0.15;
             if (bgAudio.paused) {
                 bgAudio.play().catch(() => {});
             }
