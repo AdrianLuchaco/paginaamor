@@ -185,6 +185,17 @@
             margin: 0 10px;
         }
 
+        .small-btn {
+            padding: 6px 12px;
+            font-size: 0.8em;
+        }
+
+        .volume-slider {
+            width: 80px;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+
         .play-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 15px rgba(220, 20, 60, 0.4);
@@ -492,6 +503,9 @@
 
 
                 <button class="play-btn" id="pauseBtn" onclick="pauseAudio()" style="display: none;">⏸️ Pausar</button>
+                <button class="play-btn small-btn" id="bgToggleBtn" onclick="toggleBackgroundMusic()">⏸️</button>
+                <input type="range" id="bgVolume" class="volume-slider" min="0" max="1" step="0.01" value="0.15" onchange="setBgVolume(this.value)">
+                <input type="range" id="voiceVolume" class="volume-slider" min="0" max="1" step="0.01" value="1" onchange="setVoiceVolume(this.value)">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
@@ -560,9 +574,12 @@ El futuro padre de tus hijos.`;
         const bgAudio = document.getElementById('bgAudio');
         const playlist = ['perfect.mp3', 'inthestars.mp3', 'melendi.mp3', 'laplena.mp3'];
         let currentTrack = 0;
+        let bgMusicVolume = 0.15;
+        let bgMusicPaused = false;
         bgAudio.src = playlist[currentTrack];
-        bgAudio.volume = 0.15;
-        bgAudio.volume = 0.15;
+        bgAudio.volume = bgMusicVolume;
+        document.getElementById('bgVolume').value = bgMusicVolume;
+        document.getElementById('bgToggleBtn').textContent = '⏸️';
 
 
         bgAudio.addEventListener('ended', () => {
@@ -574,18 +591,47 @@ El futuro padre de tus hijos.`;
         function playBackgroundMusic() {
             bgAudio.play().catch(() => {});
         }
+
         function pauseBackgroundMusic() {
-            bgAudio.volume = 0.015; // keep music playing softly
+            if (!bgMusicPaused) {
+                bgAudio.volume = 0.015; // keep music playing softly
+            }
         }
+
         function resumeBackgroundMusic() {
-            bgAudio.volume = 0.15;
+            if (!bgMusicPaused) {
+                bgAudio.volume = bgMusicVolume;
+                if (bgAudio.paused) {
+                    bgAudio.play().catch(() => {});
+                }
+            }
+        }
+
+        function toggleBackgroundMusic() {
+            const btn = document.getElementById('bgToggleBtn');
             if (bgAudio.paused) {
                 bgAudio.play().catch(() => {});
+                btn.textContent = '⏸️';
+                bgMusicPaused = false;
+            } else {
+                bgAudio.pause();
+                btn.textContent = '▶️';
+                bgMusicPaused = true;
             }
+        }
+
+        function setBgVolume(val) {
+            bgMusicVolume = parseFloat(val);
+            bgAudio.volume = bgMusicVolume;
+        }
+
+        function setVoiceVolume(val) {
+            voiceAudio.volume = parseFloat(val);
         }
 
         // Audio de la carta
         const voiceAudio = new Audio('voice.mp3');
+        document.getElementById('voiceVolume').value = voiceAudio.volume;
         voiceAudio.addEventListener('ended', () => {
             stopAudio();
             resumeBackgroundMusic();
