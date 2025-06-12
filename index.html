@@ -285,19 +285,19 @@
             pointer-events: none;
         }
 
-        .word {
+        .phrase {
             cursor: pointer;
             transition: all 0.2s ease;
             padding: 2px 1px;
             border-radius: 3px;
         }
 
-        .word:hover {
+        .phrase:hover {
             background-color: rgba(220, 20, 60, 0.3);
             color: #dc143c;
         }
 
-        .word.playing {
+        .phrase.playing {
             background-color: rgba(220, 20, 60, 0.5);
             color: #dc143c;
             font-weight: normal;
@@ -521,23 +521,40 @@
 
     <script>
         // Texto de la carta de ejemplo
-        const letterText = `Amor mío, Mi amor, mi vida, Marta.
-        
-Gorda (jijijiji), hoy es un día muy especial, tu cumpleaños. Llevamos (casi) dos meses juntos y a veces pienso que el destino tenía guardado nuestro amor desde hace mucho tiempo… y qué suerte la mía, porque me regaló a la persona más maravillosa y guapa que he conocido: tú.
-Desde que entraste en mi vida, todo ha cambiado. Me has dado paz, ilusión, alegría y ese amor que creía que solo existía en las películas. Contigo todo es más bonito, más real. Tu risa se ha convertido en mi sonido favorito, tus abrazos y tus besos son mi lugar seguro, y tus ojos… tus ojos son ese lugar donde me pierdo y al mismo tiempo me encuentro a mi mismo y podría estar mirándolos toda la vida sin pestañear.
-Te admiro tanto. Me encanta la forma en que te entregas a todo lo que haces. Tu pasión por ayudar a los animales, tus ganas de aprender, tu constancia en el basket como jugadora y entrenadora… Eres un ejemplo de persona, y cada día me siento más orgulloso de caminar a tu lado.
-Y quiero que sepas algo que no solo siento, sino que tengo clarísimo: quiero un futuro contigo. Todo mi futuro.
+        const letterText = `Amor mío, mi amor, mi vida, Marta.
+Gorda, hoy es un día muy especial. Tu cumpleaños.
+Llevamos casi dos meses juntos y a veces pienso que el destino tenía guardado nuestro amor desde hace mucho tiempo.
+Qué suerte la mía, porque me regaló a la persona más maravillosa y guapa que he conocido. Tú.
+Desde que entraste en mi vida todo ha cambiado. Me has dado paz, ilusión, alegría y ese amor que creía que sólo existía en las películas.
+Contigo todo es más bonito, más real.
+Tu risa se ha convertido en mi sonido favorito.
+Tus abrazos y tus besos son mi lugar seguro.
+Y tus ojos, tus ojos son ese lugar donde me pierdo y al mismo tiempo me encuentro a mí mismo y podría estar mirándolos toda la vida sin pestañear.
+Te admiro tanto. Me encanta la forma en que te entregas a todo lo que haces.
+Tu pasión por ayudar a los animales, tus ganas de aprender, tu constancia en el básquet como jugadora y entrenadora.
+Eres un ejemplo de persona y cada día me siento más orgulloso de caminar a tu lado.
+Y quiero que sepas algo que no sólo siento, sino que tengo clarísimo.
+Quiero un futuro contigo.
+Todo mi futuro. Quiero levantarme cada mañana a tu lado.
+Quiero acompañarte en cada paso que des, celebrar tus logros, abrazarte en tus días tristes, cuidarte siempre.
+Quiero formar una familia contigo, tener una vida que construyamos juntos con amor y lealtad.
+No tengas nunca dudas de lo que siento por ti. No importa lo que pase, siempre estaré ahí, contigo, para ti.
+No hay un solo día en que no agradezca tenerte.
+Eres el amor de mi vida y lo único que quiero es hacerte feliz, protegerte y que nunca te falte amor.
+Y bueno, esta carta la estoy escribiendo justo antes de subir al examen del carnet de conducir, así que si todo va bien, espero haber aprobado para poder llevarte donde quieras, mi copilota favorita.
+Y si no, bueno, no pasa nada, te compro yo un coche y me ayudas a mí, que para eso era la que ya tiene carnet.
+Te amo, Marta, con todo mi corazón.
+Feliz cumpleaños, mi amor.
+Gracias por existir, por quererme, por hacerme sentir que todo tiene sentido cuando estás cerca.
+Siempre tuyo, ahora y en el futuro.
+El futuro padre de tus hijos.`;
 
-Quiero levantarme cada mañana a tu lado. Quiero acompañarte en cada paso que des, celebrar tus logros, abrazarte en tus días tristes, cuidarte siempre. Quiero formar una familia contigo, tener una vida que construyamos juntos con amor y lealtad.
-No tengas nunca dudas de lo que siento por ti. No importa lo que pase, siempre estaré aquí, contigo, para ti. No hay un solo día en que no agradezca tenerte. Eres el amor de mi vida, y lo único que quiero es hacerte feliz, protegerte, y que nunca te falte amor.
-Y bueno… esta carta la estoy escribiendo justo antes de subir al examen del carnet de conducir, así que, si todo va bien, ¡espero haber aprobado para poder llevarte donde quieras, mi copilota favorita jijijijiji! 
-Y si no… bueno, no pasa nada, te compro yo un coche y me llevas a mí, que para eso eres la que ya tiene el carnet JJAJAJAJAJJA. 
-Te amo, Marta. Con todo mi corazón.
-
-Feliz cumpleaños, mi amor. Gracias por existir, por quererme, por hacerme sentir que todo tiene sentido cuando estás cerca.
-Siempre tuyo, ahora y en el futuro,
-
-El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
+        const phraseTimestamps = [
+            0, 4, 9, 16, 23, 31, 34, 37, 39,
+            49, 54, 60, 66, 70, 72, 76, 83,
+            88, 97, 99, 106, 118, 125, 128,
+            129, 135, 138
+        ];
 
          // Música de fondo local con lista de reproducción
         const bgAudio = document.getElementById('bgAudio');
@@ -574,38 +591,22 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
         });
 
         // Variables para la reproducción
-        let wordTimestamps = [];
-        let words = [];
+        let currentTimeSim = 0;
+        const totalPhrases = phraseTimestamps.length;
         let currentAudio = null;
         let isPlaying = false;
-        let currentWordIndex = 0;
-        let totalWords = 0;
+        let currentPhraseIndex = 0;
 
         function initializeLetter() {
             const letterContainer = document.getElementById('letterText');
 
-            const paragraphs = letterText.trim().split(/\n+/);
+            const phrases = letterText.trim().split(/\n+/);
             let htmlContent = '';
-            let wordIndex = 0;
 
-            paragraphs.forEach(paragraph => {
-                const wordsArray = paragraph.trim().split(' ').filter(w => w);
-                htmlContent += '<p>';
-
-                wordsArray.forEach(word => {
-                    const startTime = wordIndex * 0.5;
-                    const endTime = (wordIndex + 1) * 0.5;
-                    wordTimestamps.push({ word: word, start: startTime, end: endTime });
-                    words.push(word);
-
-                    htmlContent += `<span class="word" data-time="${startTime}" onclick="playFromWord(${wordIndex})">${word}</span> `;
-                    wordIndex++;
-                });
-                htmlContent += '</p>';
-
+            phrases.forEach((phrase, idx) => {
+                htmlContent += `<p class="phrase" onclick="playFromPhrase(${idx})">${phrase}</p>`;
             });
 
-            totalWords = words.length;
             letterContainer.innerHTML = htmlContent;
             createFloatingHearts();
         }
@@ -656,7 +657,7 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
 
         function updateProgressBar() {
             const progressFill = document.getElementById('progressFill');
-            const progress = (currentWordIndex / totalWords) * 100;
+            const progress = (currentPhraseIndex / totalPhrases) * 100;
             progressFill.style.width = progress + '%';
         }
 
@@ -792,29 +793,29 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
             playBtn.style.display = 'none';
             pauseBtn.style.display = 'inline-block';
             isPlaying = true;
-            currentWordIndex = 0;
+            currentPhraseIndex = 0;
+            currentTimeSim = 0;
 
-            const wordElements = document.querySelectorAll('.word');
-            
+            const phraseElements = document.querySelectorAll('.phrase');
+
             const interval = setInterval(() => {
-                // Limpiar palabra anterior
-                if (currentWordIndex > 0) {
-                    wordElements[currentWordIndex - 1].classList.remove('playing');
+                currentTimeSim += 0.1;
+
+                if (currentPhraseIndex + 1 < phraseTimestamps.length && currentTimeSim >= phraseTimestamps[currentPhraseIndex + 1]) {
+                    phraseElements[currentPhraseIndex].classList.remove('playing');
+                    currentPhraseIndex++;
                 }
-                
-                // Resaltar palabra actual
-                if (currentWordIndex < wordElements.length) {
-                    wordElements[currentWordIndex].classList.add('playing');
-                    updateProgressBar();
-                    currentWordIndex++;
-                } else {
-                    // Fin de la reproducción
+
+                phraseElements[currentPhraseIndex].classList.add('playing');
+                updateProgressBar();
+
+                if (currentPhraseIndex === phraseTimestamps.length - 1 && currentTimeSim >= phraseTimestamps[phraseTimestamps.length - 1] + 3) {
                     clearInterval(interval);
-                    wordElements[wordElements.length - 1].classList.remove('playing');
+                    phraseElements[currentPhraseIndex].classList.remove('playing');
                     stopAudio();
                 }
-            }, 500);
-            
+            }, 100);
+
             currentAudio = interval;
         }
 
@@ -827,8 +828,8 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
             voiceAudio.pause();
             resumeBackgroundMusic();
 
-            const wordElements = document.querySelectorAll('.word');
-            wordElements.forEach(word => word.classList.remove('playing'));
+            const phraseElements = document.querySelectorAll('.phrase');
+            phraseElements.forEach(p => p.classList.remove('playing'));
             
             document.getElementById('playBtn').style.display = 'inline-block';
             document.getElementById('pauseBtn').style.display = 'none';
@@ -845,45 +846,50 @@ El futuro padre de tus hijos, Adrian Cano Cabello (del pelo).`;
             voiceAudio.currentTime = 0;
             resumeBackgroundMusic();
 
-            const wordElements = document.querySelectorAll('.word');
-            wordElements.forEach(word => word.classList.remove('playing'));
+            const phraseElements = document.querySelectorAll('.phrase');
+            phraseElements.forEach(p => p.classList.remove('playing'));
             
             document.getElementById('playBtn').style.display = 'inline-block';
             document.getElementById('pauseBtn').style.display = 'none';
             document.getElementById('progressFill').style.width = '0%';
             isPlaying = false;
-            currentWordIndex = 0;
+            currentPhraseIndex = 0;
         }
 
-        function playFromWord(wordIndex) {
+        function playFromPhrase(index) {
             stopAudio();
-            
-            const timestamp = wordTimestamps[wordIndex].start;
-            showNotification(`🎵 Aquí saltaría al segundo ${timestamp.toFixed(1)} de tu audio, donde dices "${words[wordIndex]}"\n\nCuando tengas el audio real, esto funcionará automáticamente.`);
-            
-            simulatePlaybackFromWord(wordIndex);
+
+            const timestamp = phraseTimestamps[index];
+            showNotification(`🎵 Aquí saltaría al segundo ${timestamp.toFixed(1)} de tu audio, donde empieza esta frase.\n\nCuando tengas el audio real, esto funcionará automáticamente.`);
+
+            simulatePlaybackFromPhrase(index);
         }
 
-        function simulatePlaybackFromWord(startIndex) {
-            const wordElements = document.querySelectorAll('.word');
-            currentWordIndex = startIndex;
-            
+        function simulatePlaybackFromPhrase(startIndex) {
+            const phraseElements = document.querySelectorAll('.phrase');
+            currentPhraseIndex = startIndex;
+            currentTimeSim = phraseTimestamps[startIndex];
+
+            phraseElements.forEach(p => p.classList.remove('playing'));
+
             const interval = setInterval(() => {
-                if (currentWordIndex > startIndex) {
-                    wordElements[currentWordIndex - 1].classList.remove('playing');
+                currentTimeSim += 0.1;
+
+                if (currentPhraseIndex + 1 < phraseTimestamps.length && currentTimeSim >= phraseTimestamps[currentPhraseIndex + 1]) {
+                    phraseElements[currentPhraseIndex].classList.remove('playing');
+                    currentPhraseIndex++;
                 }
-                
-                if (currentWordIndex < wordElements.length) {
-                    wordElements[currentWordIndex].classList.add('playing');
-                    updateProgressBar();
-                    currentWordIndex++;
-                } else {
+
+                phraseElements[currentPhraseIndex].classList.add('playing');
+                updateProgressBar();
+
+                if (currentPhraseIndex === phraseTimestamps.length - 1 && currentTimeSim >= phraseTimestamps[phraseTimestamps.length - 1] + 3) {
                     clearInterval(interval);
-                    wordElements[wordElements.length - 1].classList.remove('playing');
+                    phraseElements[currentPhraseIndex].classList.remove('playing');
                     stopAudio();
                 }
-            }, 500);
-            
+            }, 100);
+
             currentAudio = interval;
             document.getElementById('playBtn').style.display = 'none';
             document.getElementById('pauseBtn').style.display = 'inline-block';
